@@ -1,0 +1,30 @@
+"use client"
+
+import { useEffect } from "react"
+import { RotateCcw } from "lucide-react"
+
+import { Button } from "@/components/ui/button"
+
+export default function Error({
+  error,
+  reset,
+}: {
+  error: Error & { digest?: string }
+  reset: () => void
+}) {
+  useEffect(() => {
+    console.error(error)
+  }, [error])
+
+  return (
+    <main className="grid min-h-[60dvh] place-items-center px-4">
+      <div className="flex max-w-md flex-col items-center gap-4 text-center">
+        <h1 className="text-3xl font-extrabold">Something went wrong.</h1>
+        <p className="text-muted-foreground">Please try again. If it keeps happening, contact us.</p>
+        <Button onClick={reset} size="lg">
+          <RotateCcw /> Try again
+        </Button>
+      </div>
+    </main>
+  )
+}

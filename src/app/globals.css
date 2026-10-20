@@ -1,0 +1,196 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+/* ------------------------------------------------------------------
+   Design tokens — taken from the approved canvas design.
+   Navy ink, warm cream, coral accent, saffron highlight.
+------------------------------------------------------------------- */
+:root {
+  --radius: 1rem;
+
+  --background: #f6f2ea;
+  --foreground: #13203f;
+
+  --card: #ffffff;
+  --card-foreground: #13203f;
+  --popover: #ffffff;
+  --popover-foreground: #13203f;
+
+  /* Primary CTA = coral with navy text (passes contrast) */
+  --primary: #ff6a3d;
+  --primary-foreground: #13203f;
+
+  /* Secondary = navy with white text */
+  --secondary: #13203f;
+  --secondary-foreground: #ffffff;
+
+  --muted: #f1ece2;
+  --muted-foreground: #4a5468;
+  --accent: #efe8db;
+  --accent-foreground: #13203f;
+
+  --destructive: #b42318;
+  --border: #e3dccf;
+  --input: #d6cdbc;
+  --ring: #ff6a3d;
+
+  /* Brand extras */
+  --brand-navy: #13203f;
+  --brand-navy-deep: #0e1830;
+  --brand-coral: #ff6a3d;
+  --brand-clay: #b93a12;
+  --brand-saffron: #ffc145;
+  --brand-cream: #f6f2ea;
+
+  /* Status colours (light fills + dark text, differ in lightness) */
+  --status-new-bg: #ffe3d9;
+  --status-new-fg: #8a2a0b;
+  --status-contacted-bg: #dce6ff;
+  --status-contacted-fg: #1e3a8a;
+  --status-trial-bg: #fff0c7;
+  --status-trial-fg: #6b4a00;
+  --status-joined-bg: #d5f2ec;
+  --status-joined-fg: #0f5c4f;
+
+  /* Admin sidebar */
+  --sidebar: #13203f;
+  --sidebar-foreground: #dce1eb;
+  --sidebar-accent: #ffffff;
+  --sidebar-accent-foreground: #13203f;
+  --sidebar-border: rgb(255 255 255 / 0.12);
+}
+
+@theme inline {
+  --font-sans: var(--font-body), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-display-face), ui-sans-serif, system-ui, sans-serif;
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  --color-navy: var(--brand-navy);
+  --color-navy-deep: var(--brand-navy-deep);
+  --color-coral: var(--brand-coral);
+  --color-clay: var(--brand-clay);
+  --color-saffron: var(--brand-saffron);
+  --color-cream: var(--brand-cream);
+
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+
+  --radius-sm: calc(var(--radius) - 8px);
+  --radius-md: calc(var(--radius) - 4px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 8px);
+  --radius-2xl: calc(var(--radius) + 12px);
+  --radius-3xl: calc(var(--radius) + 20px);
+
+  --animate-float: float 10s ease-in-out infinite;
+  --animate-float-slow: float 14s ease-in-out -4s infinite;
+  --animate-bob: bob 5s ease-in-out infinite;
+  --animate-marquee: marquee 60s linear infinite;
+  --animate-pulse-ring: pulse-ring 1.8s ease-out infinite;
+  --animate-spin-slow: spin 18s linear infinite;
+
+  @keyframes float {
+    0%,
+    100% {
+      transform: translate(0, 0) rotate(0deg);
+    }
+    50% {
+      transform: translate(16px, -22px) rotate(8deg);
+    }
+  }
+  @keyframes bob {
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-10px);
+    }
+  }
+  @keyframes marquee {
+    to {
+      transform: translateX(-50%);
+    }
+  }
+  @keyframes pulse-ring {
+    0% {
+      box-shadow: 0 0 0 0 rgb(255 106 61 / 0.55);
+    }
+    100% {
+      box-shadow: 0 0 0 12px rgb(255 106 61 / 0);
+    }
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-feature-settings: "ss01", "cv11";
+  }
+  h1,
+  h2,
+  h3,
+  h4 {
+    @apply font-display tracking-tight text-balance;
+  }
+  ::selection {
+    background: var(--brand-saffron);
+    color: var(--brand-navy);
+  }
+}
+
+@layer utilities {
+  /* Dotted backdrop used behind heroes */
+  .bg-dots {
+    background-image: radial-gradient(rgb(19 32 63 / 0.16) 1.2px, transparent 1.3px);
+    background-size: 22px 22px;
+    mask-image: radial-gradient(ellipse at 50% 40%, #000 25%, transparent 72%);
+  }
+  /* Striped placeholder for images not yet uploaded */
+  .bg-placeholder {
+    background: repeating-linear-gradient(135deg, #ede5d6 0 12px, #e4dac7 12px 24px);
+  }
+  .bg-placeholder-dark {
+    background: repeating-linear-gradient(135deg, #1b2b52 0 14px, #17264a 14px 28px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
