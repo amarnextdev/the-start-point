@@ -2,8 +2,13 @@ import type { StaffRole } from "@/types"
 
 /**
  * Temporary demo sign-in, used until phase 4 adds real accounts and sessions.
- * It only works in development, or when ENABLE_DEMO_LOGIN=true is set on purpose.
+ *
+ * TESTING ONLY: this is switched ON everywhere, including production, so the deployed
+ * dashboard can be tested. Before real launch, set DEMO_LOGIN_ON to false (or set
+ * DISABLE_DEMO_LOGIN=true on the host) so the demo password is no longer shown or accepted.
  */
+const DEMO_LOGIN_ON = true
+
 export const DEMO_ACCOUNT = {
   email: "demo@confidentenglish.in",
   password: "demo1234",
@@ -14,5 +19,6 @@ export const DEMO_ACCOUNT = {
 export const DEMO_SESSION_COOKIE = "ce_demo_session"
 
 export function isDemoLoginEnabled() {
-  return process.env.NODE_ENV !== "production" || process.env.ENABLE_DEMO_LOGIN === "true"
+  if (process.env.DISABLE_DEMO_LOGIN === "true") return false
+  return DEMO_LOGIN_ON || process.env.NODE_ENV !== "production" || process.env.ENABLE_DEMO_LOGIN === "true"
 }
