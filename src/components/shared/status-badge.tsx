@@ -1,7 +1,7 @@
 import { cn } from "@/lib/utils"
-import type { BatchStatus, EnquiryStatus, FeeStatus } from "@/types"
+import type { BatchStatus, EnquiryStatus, FeeStatus, StaffStatus, StudentStatus } from "@/types"
 
-type Status = EnquiryStatus | BatchStatus | FeeStatus
+type Status = EnquiryStatus | BatchStatus | FeeStatus | StudentStatus | StaffStatus
 
 const styles: Record<Status, string> = {
   New: "bg-[var(--status-new-bg)] text-[var(--status-new-fg)]",
@@ -13,6 +13,9 @@ const styles: Record<Status, string> = {
   Completed: "bg-muted text-muted-foreground",
   Paid: "bg-[var(--status-joined-bg)] text-[var(--status-joined-fg)]",
   Pending: "bg-[var(--status-new-bg)] text-[var(--status-new-fg)]",
+  Active: "bg-[var(--status-joined-bg)] text-[var(--status-joined-fg)]",
+  Dropped: "bg-[var(--status-new-bg)] text-[var(--status-new-fg)]",
+  Invited: "bg-[var(--status-trial-bg)] text-[var(--status-trial-fg)]",
 }
 
 export function StatusBadge({ status, className }: { status: Status; className?: string }) {

@@ -17,6 +17,8 @@ import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/co
 import { getInitials } from "@/lib/utils"
 import type { StaffRole } from "@/types"
 
+import { signOut } from "@/features/auth/actions"
+
 import { AdminNavLinks } from "./admin-sidebar"
 import { Logo } from "./logo"
 
@@ -34,7 +36,7 @@ export function AdminTopbar({ user }: { user: AdminUser }) {
               <Menu />
             </Button>
           </SheetTrigger>
-          <SheetContent side="left" className="w-72 border-none bg-sidebar text-white">
+          <SheetContent side="left" className="w-80 border-none bg-sidebar text-white">
             <SheetHeader>
               <SheetTitle className="sr-only">Admin navigation</SheetTitle>
               <Logo href="/admin" inverted subtitle="Admin" />
@@ -69,8 +71,7 @@ export function AdminTopbar({ user }: { user: AdminUser }) {
             <span className="text-xs font-normal text-muted-foreground">{user.email}</span>
           </DropdownMenuLabel>
           <DropdownMenuSeparator />
-          {/* Sign-out is wired to the session in phase 4 */}
-          <DropdownMenuItem variant="destructive">
+          <DropdownMenuItem variant="destructive" onSelect={() => void signOut()}>
             <LogOut /> Sign out
           </DropdownMenuItem>
         </DropdownMenuContent>

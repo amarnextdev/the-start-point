@@ -5,6 +5,7 @@ import { ArrowLeft } from "lucide-react"
 import { Logo } from "@/components/layout/logo"
 import { FloatingShape } from "@/components/motion/floating-shape"
 import { LoginForm } from "@/features/auth/components/login-form"
+import { DEMO_ACCOUNT, isDemoLoginEnabled } from "@/features/auth/demo"
 
 export const metadata: Metadata = {
   title: "Admin sign in",
@@ -29,7 +30,9 @@ export default function AdminLoginPage() {
       </aside>
       <main className="grid flex-[1_1_480px] place-items-center px-4 py-12 sm:px-12">
         <div className="flex w-full max-w-md flex-col items-center gap-6">
-          <LoginForm />
+          <LoginForm
+            demo={isDemoLoginEnabled() ? { email: DEMO_ACCOUNT.email, password: DEMO_ACCOUNT.password } : undefined}
+          />
           <Link
             href="/"
             className="group inline-flex items-center gap-1.5 text-sm font-semibold text-muted-foreground transition-colors hover:text-foreground"

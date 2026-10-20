@@ -41,7 +41,7 @@ export function AdminNavLinks({ role, onNavigate }: { role: StaffRole; onNavigat
 
 export function AdminSidebar({ role }: { role: StaffRole }) {
   return (
-    <aside className="sticky top-0 hidden h-dvh w-64 shrink-0 flex-col gap-8 bg-sidebar px-4 py-6 text-white lg:flex">
+    <aside className="sticky top-0 hidden h-dvh w-72 shrink-0 flex-col gap-8 bg-sidebar px-4 py-6 text-white lg:flex">
       <Logo href="/admin" inverted subtitle="Admin" className="px-2" />
       <AdminNavLinks role={role} />
       <div className="mt-auto border-t border-sidebar-border pt-4">

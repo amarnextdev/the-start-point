@@ -34,3 +34,28 @@ export function absoluteUrl(path = "/") {
   const base = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000"
   return new URL(path, base).toString()
 }
+
+const inrFormatter = new Intl.NumberFormat("en-IN", {
+  style: "currency",
+  currency: "INR",
+  maximumFractionDigits: 0,
+})
+
+/** Indian rupees without decimals, e.g. "₹51,000". */
+export function formatINR(amount: number) {
+  return inrFormatter.format(amount)
+}
+
+const monthFormatter = new Intl.DateTimeFormat("en-IN", { month: "long", year: "numeric" })
+
+/** "2026-10" → "October 2026". */
+export function formatMonth(monthKey: string) {
+  const [year, month] = monthKey.split("-").map(Number)
+  if (!year || !month) return monthKey
+  return monthFormatter.format(new Date(year, month - 1, 1))
+}
+
+/** Month key for a date, e.g. "2026-10". */
+export function toMonthKey(date: Date = new Date()) {
+  return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}`
+}

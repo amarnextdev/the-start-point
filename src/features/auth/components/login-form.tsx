@@ -1,25 +1,26 @@
 "use client"
 
-import { useState } from "react"
-import { ArrowRight, Eye, EyeOff, Info, KeyRound, Lock, Mail } from "lucide-react"
+import { useActionState, useState } from "react"
+import { ArrowRight, Eye, EyeOff, Info, KeyRound, Loader2, Lock, Mail } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 
-/** Sign-in form UI. Phase 4 connects it to the session (server action + rate limit). */
-export function LoginForm() {
+import { signIn, type SignInState } from "../actions"
+
+/** Sign-in form. Uses the demo account until phase 4 adds real sessions (server action + rate limit). */
+export function LoginForm({ demo }: { demo?: { email: string; password: string } }) {
   const [showPassword, setShowPassword] = useState(false)
-  // Until phase 4 wires up auth, submitting explains that sign-in isn't live yet.
-  const [notice, setNotice] = useState(false)
+  const [state, formAction, pending] = useActionState<SignInState, FormData>(signIn, {})
+  // Demo credentials are pre-filled for now so sign-in is one click.
+  const [email, setEmail] = useState(demo?.email ?? "")
+  const [password, setPassword] = useState(demo?.password ?? "")
 
   return (
     <form
-      className="flex w-full flex-col gap-5 rounded-[28px] border bg-card p-6 shadow-[0_30px_60px_-40px_rgb(19_32_63/0.45)] sm:p-9"
-      onSubmit={(e) => {
-        e.preventDefault()
-        setNotice(true)
-      }}
+      className="flex w-full flex-col gap-5"
+      action={formAction}
     >
       <div className="flex flex-col">
         <span className="inline-flex w-fit items-center gap-2 rounded-full bg-muted px-3 py-1.5 text-xs font-bold">
@@ -39,6 +40,8 @@ export function LoginForm() {
             type="email"
             autoComplete="username"
             placeholder="you@example.com"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
             className="pl-11"
             required
           />
@@ -55,6 +58,8 @@ export function LoginForm() {
             type={showPassword ? "text" : "password"}
             autoComplete="current-password"
             placeholder="Your password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
             className="pr-12 pl-11"
             required
           />
@@ -69,15 +74,34 @@ export function LoginForm() {
         </div>
       </div>
 
-      <Button type="submit" size="xl" variant="secondary" className="mt-2 w-full">
-        Sign in <ArrowRight />
+      {state.error && (
+        <p role="alert" className="flex items-start gap-2.5 rounded-2xl bg-destructive/10 px-4 py-3 text-sm font-medium text-destructive">
+          <Info className="mt-0.5 size-4 shrink-0" aria-hidden />
+          {state.error}
+        </p>
+      )}
+
+      <Button type="submit" size="xl" variant="secondary" className="mt-2 w-full" disabled={pending}>
+        {pending ? (
+          <>
+            <Loader2 className="animate-spin" /> Signing in…
+          </>
+        ) : (
+          <>
+            Sign in <ArrowRight />
+          </>
+        )}
       </Button>
 
-      {notice && (
-        <p role="status" className="flex items-start gap-2.5 rounded-2xl bg-muted px-4 py-3 text-sm text-muted-foreground">
-          <Info className="mt-0.5 size-4 shrink-0 text-clay" aria-hidden />
-          Sign-in isn&apos;t connected yet. It goes live once the dashboard is set up.
-        </p>
+      {demo && (
+        <div className="flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-dashed bg-background px-4 py-3 text-sm">
+          <span className="leading-snug">
+            <strong className="block">Demo account</strong>
+            <span className="text-muted-foreground">
+              {demo.email} · {demo.password}
+            </span>
+          </span>
+        </div>
       )}
 
       <p className="border-t pt-5 text-center text-sm text-muted-foreground">
