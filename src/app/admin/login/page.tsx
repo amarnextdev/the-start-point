@@ -7,6 +7,9 @@ import { FloatingShape } from "@/components/motion/floating-shape"
 import { LoginForm } from "@/features/auth/components/login-form"
 import { DEMO_ACCOUNT, isDemoLoginEnabled } from "@/features/auth/demo"
 
+// Render per request so the demo-login switch (ENABLE_DEMO_LOGIN) is read at runtime, not frozen at build time.
+export const dynamic = "force-dynamic"
+
 export const metadata: Metadata = {
   title: "Admin sign in",
   robots: { index: false, follow: false },
