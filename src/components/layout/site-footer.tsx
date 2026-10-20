@@ -30,7 +30,7 @@ export function SiteFooter({ showCta = true }: { showCta?: boolean }) {
   const year = new Date().getFullYear()
 
   return (
-    <footer className="relative overflow-hidden bg-navy-deep text-[#c9d0de]">
+    <footer className="relative -mt-10 overflow-hidden rounded-t-[36px] sm:rounded-t-[56px] bg-navy-deep sm:-mt-14 text-[#c9d0de]">
       <Container className="relative flex flex-col gap-12 pt-16 sm:gap-16 sm:pt-20">
         {showCta && (
           <FooterCta>

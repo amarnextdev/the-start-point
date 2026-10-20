@@ -19,7 +19,7 @@ export function EnquirySection({ batches }: { batches: BatchOption[] }) {
     .slice(0, 2)
 
   return (
-    <section id="enquire" className="scroll-mt-8 px-4 py-16 sm:px-6 sm:py-20 lg:py-24">
+    <section id="enquire" className="relative -mt-10 scroll-mt-8 rounded-t-[36px] sm:rounded-t-[56px] bg-background px-4 py-16 sm:-mt-14 sm:px-6 sm:py-20 lg:py-24">
       <Reveal>
         <Container className="relative grid max-w-[1200px] items-center gap-12 overflow-hidden rounded-[clamp(28px,4vw,48px)] bg-navy p-7 text-white sm:p-12 lg:grid-cols-[1fr_1.05fr] lg:gap-16 lg:p-16">
           <div aria-hidden className="bg-dots absolute inset-0 opacity-30 invert" />

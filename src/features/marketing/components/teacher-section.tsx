@@ -48,7 +48,7 @@ export function TeacherSection() {
   const { teacherName, teacher } = siteConfig
 
   return (
-    <section id="teacher" className="rounded-t-[56px] bg-card py-20 sm:py-24 lg:py-28">
+    <section id="teacher" className="rounded-t-[36px] sm:rounded-t-[56px] bg-card py-20 sm:py-24 lg:py-28">
       <Container className="grid items-center gap-14 lg:grid-cols-[0.9fr_1.1fr] lg:gap-24">
         <Reveal className="relative mx-auto w-full max-w-md">
           <PortraitFrame name={teacherName} />

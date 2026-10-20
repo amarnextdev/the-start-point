@@ -136,7 +136,7 @@ export function MapCard({ className }: { className?: string }) {
 
 export function ContactSection() {
   return (
-    <section id="contact" className="relative overflow-hidden bg-saffron py-20 text-navy sm:py-24 lg:py-28">
+    <section id="contact" className="relative overflow-hidden rounded-t-[36px] sm:rounded-t-[56px] bg-saffron py-20 text-navy sm:py-24 lg:py-28">
       <div aria-hidden className="absolute -top-40 -right-40 size-[520px] rounded-full border-2 border-navy/[0.08]" />
       <div aria-hidden className="absolute -top-16 -right-16 size-80 rounded-full border-2 border-dashed border-navy/10" />
       <Container className="relative flex flex-col gap-10">
