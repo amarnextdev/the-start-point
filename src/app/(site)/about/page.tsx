@@ -3,7 +3,7 @@ import Link from "next/link"
 import { ArrowRight, GraduationCap, MapPin, Users } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
-import { PageHero } from "@/components/shared/page-hero"
+import { PageHero, TitleHighlight } from "@/components/shared/page-hero"
 import { siteConfig } from "@/config/site"
 import {
   ClassStepsSection,
@@ -22,10 +22,13 @@ export default function AboutPage() {
   return (
     <>
     <PageHero
-      breadcrumb="About"
       eyebrow="Our story"
-      title={`About ${siteConfig.name}`}
-      description="[ONE OR TWO SENTENCES — why the classes exist and who they help.]"
+      title={
+        <>
+          About <TitleHighlight>{siteConfig.name}</TitleHighlight>
+        </>
+      }
+      description="We started with one simple belief: you learn to speak English by speaking it. Small batches, a patient trainer, and a classroom where mistakes are welcome."
       actions={
         <>
           <Button asChild size="lg">
@@ -38,10 +41,10 @@ export default function AboutPage() {
           </Button>
         </>
       }
-      chips={[
-        { icon: GraduationCap, label: "[YEARS] years teaching" },
-        { icon: Users, label: "[STUDENTS TAUGHT]" },
-        { icon: MapPin, label: siteConfig.city },
+      facts={[
+        { icon: GraduationCap, label: "Teaching", value: `${siteConfig.teacher.stats[0].value} years` },
+        { icon: Users, label: "Students trained", value: siteConfig.teacher.stats[1].value },
+        { icon: MapPin, label: "Classroom", value: siteConfig.city },
       ]}
     />
     <MissionSection />

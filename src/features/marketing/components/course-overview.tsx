@@ -107,8 +107,9 @@ function CourseSpecCard() {
           <div className="flex flex-wrap items-end justify-between gap-x-6 gap-y-4">
             <div>
               <span className="text-[13px] font-medium text-white/60">Course fee</span>
-              <p className="mt-1 font-display text-[2.6rem] leading-none font-extrabold tracking-tight">
-                {course.fee}
+              <p className="mt-1 flex items-baseline gap-2">
+                <span className="font-display text-[2.6rem] leading-none font-extrabold tracking-tight">{course.fee}</span>
+                <span className="text-sm font-semibold text-white/60">{course.feePeriod}</span>
               </p>
               <span className="mt-2 block text-sm text-white/60">{course.feeNote}</span>
             </div>

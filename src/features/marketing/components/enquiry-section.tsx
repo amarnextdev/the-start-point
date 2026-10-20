@@ -8,7 +8,7 @@ import { Reveal } from "@/components/motion/reveal"
 import { siteConfig } from "@/config/site"
 import { EnquiryForm, type BatchOption } from "@/features/enquiries/components/enquiry-form"
 
-const promises = ["Takes less than a minute", "Your first class is a free demo", "We call you back within 24 hours"]
+const promises = ["Takes less than a minute", "Your first class is a free demo", "We call you back within 2 hours"]
 
 export function EnquirySection({ batches }: { batches: BatchOption[] }) {
   const { teacherName, teacher } = siteConfig

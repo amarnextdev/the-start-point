@@ -48,8 +48,9 @@ export const siteConfig = {
     classLength: "90 minutes each",
     classSize: "12",
     location: "In-person classroom",
-    fee: "₹8,500",
-    feeNote: "Pay in full, or in 2 instalments",
+    fee: "₹3,000",
+    feePeriod: "/ month",
+    feeNote: "Paid at the start of each month",
     feeIncludes: ["Study material", "Completion certificate"],
     outcomes: [
       "Hold a 10-minute conversation without switching to Hindi",

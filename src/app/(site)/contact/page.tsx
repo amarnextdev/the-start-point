@@ -2,7 +2,7 @@ import type { Metadata } from "next"
 import { Clock, Mail, MapPin, MessageCircle, Phone } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
-import { PageHero } from "@/components/shared/page-hero"
+import { PageHero, TitleHighlight } from "@/components/shared/page-hero"
 import { siteConfig } from "@/config/site"
 import { getPublicBatches } from "@/features/batches/data/placeholder-batches"
 import {
@@ -26,10 +26,13 @@ export default async function ContactPage() {
   return (
     <>
     <PageHero
-      breadcrumb="Contact"
       eyebrow="Contact"
-      title="Let's get you started."
-      description="Call, message or send an enquiry — we'll help you pick the right batch."
+      title={
+        <>
+          Let&apos;s get you <TitleHighlight>started.</TitleHighlight>
+        </>
+      }
+      description="Call, message or send an enquiry. We'll answer your questions and help you pick the right batch."
       actions={
         <>
           <Button asChild size="lg">
@@ -51,9 +54,10 @@ export default async function ContactPage() {
           </Button>
         </>
       }
-      chips={[
-        { icon: Clock, label: contact.hours },
-        { icon: MapPin, label: contact.address },
+      facts={[
+        { icon: Clock, label: "Open", value: contact.hours },
+        { icon: MapPin, label: "Find us", value: `${contact.addressShort}, Shivajinagar` },
+        { icon: MessageCircle, label: "Replies", value: contact.responseTime.replace(/^Usually replies /, "Usually ") },
       ]}
     />
     <ContactEnquirySection batches={batches.map(({ id, name }) => ({ id, name }))} />

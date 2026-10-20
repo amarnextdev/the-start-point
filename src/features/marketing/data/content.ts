@@ -7,6 +7,7 @@ import {
   Home,
   Mic,
   MessageSquareText,
+  Presentation,
   Target,
   Users,
   type LucideIcon,
@@ -35,7 +36,7 @@ export const homeFaqs: FaqItem[] = [
   {
     question: "What are the fees and how do I pay?",
     answer:
-      "The full 12-week course is ₹8,500. You can pay it at once, or in two instalments: half when you join and half after six weeks. We accept UPI, card and cash.",
+      "The fee is ₹3,000 per month, paid at the start of each month. The full course runs for 3 months. There is no registration fee, and study material is included. We accept UPI, card and cash.",
   },
   {
     question: "What happens if I miss a class?",
@@ -50,15 +51,39 @@ export const homeFaqs: FaqItem[] = [
 ]
 
 export const courseFaqs: FaqItem[] = [
-  { question: "Which batch should I choose?", answer: "[ANSWER — how to pick a batch by level and timing.]" },
-  { question: "Do I need any prior English knowledge?", answer: "[ANSWER — the starting level you accept.]" },
-  { question: "Will I get study material?", answer: "[ANSWER — books, worksheets or notes provided.]" },
+  {
+    question: "Which batch should I choose?",
+    answer:
+      "Pick the timing you can attend every week without fail. Morning suits students, Evening suits working professionals, and Weekend suits anyone with a busy weekday. Not sure about your level? We do a 5-minute speaking check when you call.",
+  },
+  {
+    question: "Do I need any prior English knowledge?",
+    answer:
+      "You should be able to read simple English and understand basic sentences. You do not need to speak well yet. That is what the course is for.",
+  },
+  {
+    question: "Will I get study material?",
+    answer:
+      "Yes. You get a printed workbook on day one, plus weekly worksheets and speaking tasks. Everything is included in the course fee.",
+  },
 ]
 
 export const contactFaqs: FaqItem[] = [
-  { question: "Can I visit before joining?", answer: "[ANSWER — visiting or trial class policy.]" },
-  { question: "Is parking available nearby?", answer: "[ANSWER — parking or public transport.]" },
-  { question: "What should I bring to the first class?", answer: "[ANSWER — notebook, documents, fees.]" },
+  {
+    question: "Can I visit before joining?",
+    answer:
+      "Yes, and we recommend it. Come in during opening hours to see the classroom, or book a free demo class and sit in with a running batch before you decide.",
+  },
+  {
+    question: "Is parking available nearby?",
+    answer:
+      "Two-wheeler parking is available in the building. For cars, there is paid parking on FC Road. Deccan Gymkhana bus stop and Deccan metro station are a short walk away.",
+  },
+  {
+    question: "What should I bring to the first class?",
+    answer:
+      "Just a notebook, a pen and a photo ID for registration. Your printed workbook is handed to you in class, and the first month's fee can be paid by UPI, card or cash.",
+  },
 ]
 
 export const benefits: FeatureItem[] = [
@@ -68,10 +93,38 @@ export const benefits: FeatureItem[] = [
   { icon: Users, tone: "white", title: "Learn with peers", description: "A small group gives you practice partners and makes it easier to stop hesitating." },
 ]
 
-export const audiences: FeatureItem[] = [
-  { icon: GraduationCap, tone: "coral", title: "[AUDIENCE 1]", description: "e.g. Students preparing for college or exams" },
-  { icon: Briefcase, tone: "saffron", title: "[AUDIENCE 2]", description: "e.g. Working professionals who want to speak at work" },
-  { icon: Home, tone: "navy", title: "[AUDIENCE 3]", description: "e.g. Anyone who wants confidence in everyday English" },
+export type AudienceItem = FeatureItem & {
+  /** Situations this learner practises in class. */
+  practise: string[]
+  /** Batch that usually suits this learner. */
+  batch: string
+}
+
+export const audiences: AudienceItem[] = [
+  {
+    icon: GraduationCap,
+    tone: "coral",
+    title: "Students & freshers",
+    description: "Speak up in class, hold your own in group discussions and walk into campus interviews prepared.",
+    practise: ["Group discussions", "Self-introduction & interviews", "Class presentations"],
+    batch: "Morning Batch",
+  },
+  {
+    icon: Briefcase,
+    tone: "saffron",
+    title: "Working professionals",
+    description: "Talk to clients, managers and your team without translating every sentence in your head first.",
+    practise: ["Meetings & status updates", "Client and team calls", "Small talk at work"],
+    batch: "Evening Batch",
+  },
+  {
+    icon: Home,
+    tone: "navy",
+    title: "Everyday learners",
+    description: "Homemakers and anyone who wants to handle the bank, a school meeting or a trip abroad in English, calmly.",
+    practise: ["Shopping & travel", "School and bank visits", "Phone conversations"],
+    batch: "Weekend Batch",
+  },
 ]
 
 export const modules = [
@@ -82,36 +135,71 @@ export const modules = [
 ] as const satisfies readonly { title: string; description: string; tone: Tone }[]
 
 export const classSteps = [
-  { title: "[STEP 1]", description: "e.g. Warm-up conversation to get everyone talking", tone: "cream" },
-  { title: "[STEP 2]", description: "e.g. A new language point, explained simply", tone: "saffron" },
-  { title: "[STEP 3]", description: "e.g. Pair and group speaking practice with feedback", tone: "navy" },
-] as const satisfies readonly { title: string; description: string; tone: Tone }[]
+  {
+    title: "Warm-up talk",
+    time: "15 min",
+    description: "Everyone speaks in the first few minutes: a quick question, a story from your day, a short pair chat.",
+    tone: "cream",
+  },
+  {
+    title: "One new skill",
+    time: "20 min",
+    description: "A single language point, explained simply with examples you will actually use that week.",
+    tone: "saffron",
+  },
+  {
+    title: "Speak and get feedback",
+    time: "55 min",
+    description: "Role-plays, pair work and group discussions, with the trainer correcting pronunciation and grammar as you go.",
+    tone: "navy",
+  },
+] as const satisfies readonly { title: string; time: string; description: string; tone: Tone }[]
 
 export const values: FeatureItem[] = [
-  { icon: Heart, tone: "coral", title: "[VALUE 1]", description: "e.g. Patience with every beginner" },
-  { icon: Mic, tone: "saffron", title: "[VALUE 2]", description: "e.g. More speaking, less lecturing" },
-  { icon: Target, tone: "navy", title: "[VALUE 3]", description: "e.g. Clear progress you can feel" },
+  { icon: Heart, tone: "coral", title: "Patience with beginners", description: "No question is too basic. You will never be laughed at for a mistake in this classroom." },
+  { icon: Mic, tone: "saffron", title: "More speaking, less lecturing", description: "Most of every class is you talking, not the trainer. That is how confidence is built." },
+  { icon: Target, tone: "navy", title: "Progress you can feel", description: "A short speaking check every month, so you can hear for yourself how far you have come." },
 ]
 
 export const teacherCredentials = [
-  { title: "[QUALIFICATION]", description: "e.g. Degree or certification" },
-  { title: "[TEACHING EXPERIENCE]", description: "e.g. Years and type of teaching" },
-  { title: "[SPECIALISATION]", description: "e.g. Spoken English, interview preparation" },
+  { title: "CELTA certified", description: "Cambridge English teaching qualification" },
+  { title: "9+ years of teaching", description: "Classroom batches and corporate communication training" },
+  { title: "Spoken English & interviews", description: "Fluency, pronunciation and interview preparation" },
 ]
 
-export const feeIncludes = ["[WHAT'S INCLUDED — item 1]", "[WHAT'S INCLUDED — item 2]", "[WHAT'S INCLUDED — item 3]"]
+export const feeIncludes = [
+  "36 classroom sessions over 12 weeks",
+  "Printed study material and worksheets",
+  "Completion certificate",
+  "A free demo class before you pay",
+]
+
+export const feeFacts = [
+  { label: "Monthly fee", value: "₹3,000", note: "paid at the start of each month" },
+  { label: "Course length", value: "3 months", note: "12 weeks, 36 classes" },
+]
 
 export const nextSteps = [
-  { title: "We get in touch", description: "We call you back [RESPONSE TIME — e.g. within one working day]." },
-  { title: "Find your batch", description: "We help you choose a level and timing that suits you." },
-  { title: "Start speaking", description: "Join your batch from [START DATE] and attend your first class." },
+  { title: "We get in touch", description: "We call you back within 2 hours during opening hours." },
+  { title: "Find your batch", description: "A quick 5-minute speaking check, then we suggest the level and timing that suit you." },
+  { title: "Start speaking", description: "Attend your free demo class, then join the next batch." },
 ]
 
-export const galleryItems = [
-  { label: "CLASSROOM PHOTO 1", caption: "[CAPTION]", className: "sm:row-span-2" },
-  { label: "CLASSROOM PHOTO 2", caption: "[CAPTION]", className: "" },
-  { label: "CLASSROOM PHOTO 3", caption: "[CAPTION]", className: "" },
-  { label: "CLASSROOM PHOTO 4", caption: "[CAPTION]", className: "sm:col-span-2" },
+export type GalleryItem = {
+  label: string
+  caption: string
+  icon: LucideIcon
+  tone: "navy" | "saffron" | "coral" | "cream"
+  image: string
+  className: string
+}
+
+export const galleryItems: GalleryItem[] = [
+  // Designed tiles stand in until real classroom photos are added (set `image` to a /public path).
+  { label: "Main classroom", caption: "Seats 12, set up for conversation", icon: Users, tone: "navy", image: "", className: "sm:row-span-2" },
+  { label: "Group discussions", caption: "Evening Batch", icon: MessageSquareText, tone: "saffron", image: "", className: "" },
+  { label: "Mock interviews", caption: "Students & freshers", icon: Briefcase, tone: "coral", image: "", className: "" },
+  { label: "Presentation day", caption: "End of every month", icon: Presentation, tone: "cream", image: "", className: "sm:col-span-2" },
 ]
 
 export const marqueeWords = ["Speak", "Listen", "Read", "Write", "Practise", "Repeat"]

@@ -15,7 +15,7 @@ const iconTileVariants = cva("grid shrink-0 place-items-center", {
     size: {
       sm: "size-9 rounded-[10px] [&_svg]:size-4",
       md: "size-12 rounded-[14px] [&_svg]:size-5",
-      lg: "size-14 rounded-2xl [&_svg]:size-6",
+      lg: "size-14 rounded-[16px] [&_svg]:size-6",
     },
   },
   defaultVariants: { tone: "cream", size: "md" },

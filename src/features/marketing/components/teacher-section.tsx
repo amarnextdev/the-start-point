@@ -17,7 +17,7 @@ export function RotatingBadge({ className }: { className?: string }) {
   )
 }
 
-const initials = (name: string) =>
+export const initials = (name: string) =>
   name
     .split(/\s+/)
     .map((part) => part[0])
@@ -26,7 +26,7 @@ const initials = (name: string) =>
     .toUpperCase()
 
 /** Stands in for the teacher's photo: a designed monogram portrait instead of a striped box. */
-function PortraitFrame({ name }: { name: string }) {
+export function PortraitFrame({ name }: { name: string }) {
   return (
     <div className="relative aspect-[4/5] overflow-hidden rounded-t-[200px] rounded-b-[32px] bg-navy">
       <div aria-hidden className="bg-dots absolute inset-0 opacity-25 invert" />

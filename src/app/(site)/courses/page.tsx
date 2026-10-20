@@ -3,11 +3,10 @@ import Link from "next/link"
 import { ArrowRight, CalendarDays, Clock, MapPin, Users } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
-import { PageHero } from "@/components/shared/page-hero"
+import { PageHero, TitleHighlight } from "@/components/shared/page-hero"
 import { siteConfig } from "@/config/site"
 import { getPublicBatches } from "@/features/batches/data/placeholder-batches"
 import {
-  AudienceSection,
   CourseBatchesSection,
   FeesSection,
   ModulesTimeline,
@@ -26,10 +25,13 @@ export default async function CoursesPage() {
   return (
     <>
     <PageHero
-      breadcrumb="Courses"
       eyebrow="Courses"
-      title="Courses & batches"
-      description="[INTRO — how the course is structured and who each batch suits.]"
+      title={
+        <>
+          Courses &amp; <TitleHighlight>batches</TitleHighlight>
+        </>
+      }
+      description="One 12-week spoken English course, three batch timings. Pick the one that fits your day: early mornings, after work, or weekends."
       actions={
         <>
           <Button asChild size="lg">
@@ -42,18 +44,22 @@ export default async function CoursesPage() {
           </Button>
         </>
       }
-      chips={[
-        { icon: CalendarDays, label: "Next batch: [START DATE]" },
-        { icon: Clock, label: course.duration },
-        { icon: Users, label: `${course.classSize} per batch` },
-        { icon: MapPin, label: course.location },
+      facts={[
+        { icon: CalendarDays, label: "Next batch", value: batches[0]?.startDate ?? "Opening soon" },
+        { icon: Clock, label: "Duration", value: course.duration },
+        { icon: Users, label: "Batch size", value: `Max ${course.classSize} students` },
+        { icon: MapPin, label: "Format", value: course.location },
       ]}
     />
-    <AudienceSection />
     <ModulesTimeline />
     <CourseBatchesSection batches={batches} />
     <FeesSection />
-    <FaqSection items={courseFaqs} title="Course questions." lead="Something else on your mind?" />
+    <FaqSection
+      items={courseFaqs}
+      title="Course questions."
+      lead="Something else on your mind?"
+      className="pt-28 pb-24 sm:pt-32 sm:pb-28 lg:pt-40 lg:pb-32"
+    />
     </>
   )
 }

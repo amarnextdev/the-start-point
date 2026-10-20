@@ -1,5 +1,6 @@
 import type { Metadata } from "next"
 import Link from "next/link"
+import { ArrowLeft } from "lucide-react"
 
 import { Logo } from "@/components/layout/logo"
 import { FloatingShape } from "@/components/motion/floating-shape"
@@ -29,8 +30,12 @@ export default function AdminLoginPage() {
       <main className="grid flex-[1_1_480px] place-items-center px-4 py-12 sm:px-12">
         <div className="flex w-full max-w-md flex-col items-center gap-6">
           <LoginForm />
-          <Link href="/" className="text-sm font-semibold text-muted-foreground hover:text-foreground">
-            ← Back to website
+          <Link
+            href="/"
+            className="group inline-flex items-center gap-1.5 text-sm font-semibold text-muted-foreground transition-colors hover:text-foreground"
+          >
+            <ArrowLeft className="size-4 transition-transform group-hover:-translate-x-0.5" aria-hidden />
+            Back to website
           </Link>
         </div>
       </main>

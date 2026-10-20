@@ -46,11 +46,16 @@ function MapIllustration() {
   )
 }
 
+function directionsHref(contact: { mapUrl: string; address: string }) {
+  return contact.mapUrl || `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(contact.address)}`
+}
+
 function telHref(phone: string) {
   return `tel:${phone.replace(/[^\d+]/g, "")}`
 }
 
-export function ContactRows() {
+/** Contact methods. "list" = full-width rows (home); "grid" = compact 2×2 tiles (Contact page). */
+export function ContactRows({ variant = "list" }: { variant?: "list" | "grid" }) {
   const { contact, name } = siteConfig
   const whatsapp = buildWhatsAppLink(contact.whatsapp, enquiryWhatsAppMessage(name))
   const rows = [
@@ -59,6 +64,58 @@ export function ContactRows() {
     { icon: Mail, tone: "saffron" as const, label: "Email", value: contact.email, href: `mailto:${contact.email}` },
     { icon: Clock, tone: "cream" as const, label: "Office hours", value: contact.hours },
   ]
+
+  if (variant === "grid") {
+    return (
+      <ul className="grid gap-3 sm:grid-cols-2">
+        {rows.map(({ icon, tone, label, value, href, external }) => {
+          const content = (
+            <>
+              <IconTile icon={icon} tone={tone} size="sm" />
+              <span className="flex min-w-0 flex-col">
+                <span className="text-xs font-semibold text-muted-foreground">{label}</span>
+                <span className="text-sm leading-snug font-bold [overflow-wrap:anywhere]">{value}</span>
+              </span>
+            </>
+          )
+          const tile = "flex h-full items-center gap-3 rounded-2xl bg-card p-3"
+          return (
+            <li key={label}>
+              {href ? (
+                <a
+                  href={href}
+                  {...(external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+                  className={`${tile} transition-all hover:-translate-y-0.5 hover:shadow-[0_14px_28px_-20px_rgb(19_32_63/0.5)]`}
+                >
+                  {content}
+                </a>
+              ) : (
+                <div className={tile}>{content}</div>
+              )}
+            </li>
+          )
+        })}
+        <li className="sm:col-span-2">
+          <div className="flex flex-wrap items-center gap-x-4 gap-y-3 rounded-2xl bg-card p-3">
+            <IconTile icon={MapPin} tone="navy" size="sm" />
+            <address className="flex min-w-0 flex-1 flex-col not-italic">
+              <span className="text-xs font-semibold text-muted-foreground">Class address</span>
+              <span className="text-sm leading-snug font-bold">{contact.address}</span>
+              <span className="mt-0.5 text-xs font-semibold text-clay">{contact.landmark}</span>
+            </address>
+            <a
+              href={directionsHref(contact)}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1.5 rounded-full bg-navy px-4 py-2 text-xs font-bold whitespace-nowrap text-white transition-colors hover:bg-coral hover:text-navy"
+            >
+              Get directions <ArrowRight className="size-3.5" />
+            </a>
+          </div>
+        </li>
+      </ul>
+    )
+  }
 
   return (
     <ul className="flex flex-col">
@@ -99,33 +156,34 @@ export function ContactRows() {
 
 export function MapCard({ className }: { className?: string }) {
   const { contact } = siteConfig
+  // Keyless Google Maps embed for the class address; swap for a "Share → Embed" URL once the real pin exists.
+  const embedSrc = `https://www.google.com/maps?q=${encodeURIComponent(contact.address)}&z=16&output=embed`
+
   return (
-    <div className={`relative min-h-[460px] overflow-hidden rounded-[32px] ${className ?? ""}`}>
-      <MapIllustration />
-      <span aria-hidden className="absolute top-[30%] left-[59%] size-28 -translate-1/2 animate-ping rounded-full bg-coral/25 [animation-duration:2.4s]" />
-      <span aria-hidden className="absolute top-[30%] left-[59%] -translate-x-1/2 -translate-y-full">
-        <span className="grid size-12 -rotate-45 animate-bob place-items-center rounded-[50%_50%_50%_4px] bg-navy shadow-lg">
-          <span className="size-3.5 rounded-full bg-saffron" />
-        </span>
-      </span>
-      <span className="absolute top-[30%] left-[59%] mt-3 -translate-x-1/2 rounded-full bg-navy px-3 py-1 text-xs font-bold whitespace-nowrap text-white shadow-md">
-        {siteConfig.name}
-      </span>
-      <div className="absolute inset-x-4 bottom-4 flex flex-wrap items-center justify-between gap-4 rounded-3xl bg-card p-5 shadow-xl">
+    <div className={`flex min-h-[460px] flex-col overflow-hidden rounded-[32px] border bg-card ${className ?? ""}`}>
+      <div className="relative min-h-[300px] flex-1">
+        {/* Shown while the map loads, or if it is blocked */}
+        <MapIllustration />
+        <iframe
+          title={`Map showing ${siteConfig.name}, ${contact.addressShort}`}
+          src={embedSrc}
+          loading="lazy"
+          referrerPolicy="no-referrer-when-downgrade"
+          className="absolute inset-0 size-full border-0 [filter:saturate(0.85)_sepia(0.08)]"
+        />
+      </div>
+
+      <div className="flex flex-wrap items-center justify-between gap-4 border-t p-5 sm:px-6">
         <div className="flex min-w-0 flex-1 items-start gap-3.5">
           <IconTile icon={MapPin} tone="saffron" />
-          <div className="flex min-w-0 flex-col">
+          <address className="flex min-w-0 flex-col not-italic">
             <strong className="font-display text-lg leading-snug">{contact.addressShort}</strong>
             <span className="text-sm text-muted-foreground">{contact.address}</span>
             <span className="mt-1 text-xs font-semibold text-clay">{contact.landmark}</span>
-          </div>
+          </address>
         </div>
         <Button asChild variant="secondary">
-          <a
-            href={contact.mapUrl || `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(contact.address)}`}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
+          <a href={directionsHref(contact)} target="_blank" rel="noopener noreferrer">
             Get directions <ArrowRight />
           </a>
         </Button>
